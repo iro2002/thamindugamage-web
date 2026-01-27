@@ -24,7 +24,7 @@ const reviews = [
 
 const Review = () => {
   return (
-    <section className="relative w-full bg-[#050505] text-white py-24 lg:py-48 px-6 overflow-hidden border-t border-white/[0.05]">
+    <section id="review" className="relative w-full bg-[#050505] text-white py-24 lg:py-48 px-6 overflow-hidden border-t border-white/[0.05]">
       {/* Structural Accents */}
       <div className="absolute top-0 right-1/3 w-px h-full bg-white/[0.02] hidden lg:block" />
 

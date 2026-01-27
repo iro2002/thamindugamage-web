@@ -14,13 +14,13 @@ import a3_1 from "../gallery/05.jpg";
 const ALBUMS = [
   {
     id: "01",
-    title: "Noir Et Blanc",
+    title: "මන්දෝදරි 2025 – 🎶🌙",
     year: "2024",
     images: [a1_1, a1_2, a2_1], // Add imported variables here
   },
   {
     id: "02",
-    title: "Urban Silence",
+    title: "සරසවි මියැසිය 2025 🎙♥️",
     year: "2025",
     images: [a2_1, a2_2], 
   },
@@ -39,7 +39,7 @@ const AlbumSection = ({ album }) => {
   const prev = () => setActiveIdx((prev) => (prev - 1 + album.images.length) % album.images.length);
 
   return (
-    <section className="w-full min-h-screen border-b border-white/[0.03] flex flex-col justify-center py-20 lg:py-32">
+    <section id="gallery" section className="w-full min-h-screen border-b border-white/[0.03] flex flex-col justify-center py-20 lg:py-32">
       <div className="max-w-7xl mx-auto w-full px-6">
         
         {/* Album Header */}

@@ -83,7 +83,7 @@ const Hero = () => {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-10 pt-2">
               <a
-                href="#portfolio"
+                href="#gallery"
                 className="group relative text-[10px] font-bold uppercase tracking-[0.4em] text-white/80 hover:text-white transition"
               >
                 <span className="relative z-10">View Gallery</span>
