@@ -13,23 +13,7 @@ const Footer = () => {
       </div>
 
       <div className="relative z-10 max-w-screen-2xl mx-auto px-6 md:px-12">
-        {/* Massive Call to Action */}
-        <div className="mb-32">
-          <HashLink 
-            smooth 
-            to="/contact" 
-            className="group inline-block"
-          >
-            <p className="text-orange-500 font-mono text-[10px] uppercase tracking-[0.6em] mb-6">
-              Available Worldwide
-            </p>
-            <h2 className="text-6xl md:text-9xl font-serif italic tracking-tighter leading-none transition-transform duration-700 group-hover:translate-x-4">
-              Let's Create <br /> 
-              <span className="not-italic text-white/90">Something Iconic</span>
-              <ArrowUpRight className="inline-block ml-4 text-orange-500 opacity-0 group-hover:opacity-100 transition-all duration-500 -translate-y-4" size={60} strokeWidth={1} />
-            </h2>
-          </HashLink>
-        </div>
+        
 
         {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16 border-t border-white/5 pt-16">
