@@ -11,52 +11,16 @@ import babyImg from "../gallery/service/baby.jpg";
 import birthdayImg from "../gallery/service/birthday.jpg";
 
 const services = [
-  { 
-    id: "01", 
-    title: "WEDDINGS", 
-    category: "Ceremony", 
-    desc: "Capturing your eternal bond with cinematic precision.", 
-    img: weddingImg, 
-  },
-  { 
-    id: "02", 
-    title: "ENGAGEMENT", 
-    category: "Couples",
-    desc: "The beginning of a beautiful journey together.",
-    img: engagementImg, 
-  },
-  { 
-    id: "03", 
-    title: "PRE SHOOT", 
-    category: "Creative",
-    desc: "Stylized storytelling before the big day.",
-    img: preshootImg, 
-  },
-  { 
-    id: "04", 
-    title: "GRADUATION", 
-    category: "Milestones",
-    desc: "Celebrating academic achievements and new beginnings.",
-    img: graduationImg, 
-  },
-  { 
-    id: "05", 
-    title: "BABY SHOOT", 
-    category: "Family",
-    desc: "Preserving the innocence of your little ones.",
-    img: babyImg, 
-  },
-  { 
-    id: "06", 
-    title: "BD SHOOT", 
-    category: "Parties",
-    desc: "Vibrant memories of your special celebrations.",
-    img: birthdayImg, 
-  }
+  { id: "01", title: "WEDDINGS", img: weddingImg },
+  { id: "02", title: "ENGAGEMENT", img: engagementImg },
+  { id: "03", title: "PRE SHOOT",  img: preshootImg },
+  { id: "04", title: "GRADUATION", img: graduationImg },
+  { id: "05", title: "BABY SHOOT", img: babyImg },
+  { id: "06", title: "BD SHOOT", img: birthdayImg }
 ];
 
 const Service = () => {
-  const [hovered, setHovered] = useState(null);
+  const [hoveredId, setHoveredId] = useState(null);
   const [expandedId, setExpandedId] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   
@@ -79,93 +43,102 @@ const Service = () => {
   };
 
   return (
-    <section id="services" className="bg-[#0a0a0a] text-white border-t border-orange-500/10 relative overflow-hidden">
-      {/* Subtle Background Glow */}
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-orange-500/5 blur-[120px] pointer-events-none" />
-
-      {/* Header */}
-      <div className="p-8 lg:p-24 border-b border-white/5">
-        <div className="flex items-center gap-4 mb-4">
-            <div className="w-8 h-px bg-orange-500/40" />
+    <section id="services" className="bg-[#0a0a0a] text-white w-full h-screen flex flex-col overflow-hidden">
+      
+      {/* HEADER: No overlap, fixed height */}
+      <header className="flex-none pt-12 pb-8 px-8 lg:px-20 z-20">
+        <div className="flex items-center gap-4 mb-3">
+          <div className="w-8 h-px bg-orange-500" />
+          <span className="text-[10px] tracking-[0.4em] text-orange-500 font-mono uppercase">Services</span>
         </div>
-        <h2 className="text-5xl lg:text-8xl font-serif italic tracking-tighter text-white/90 leading-none">
-          Event <span className="not-italic text-orange-50/80">Coverage</span>
+        <h2 className="text-5xl lg:text-7xl font-serif italic tracking-tighter leading-none">
+          Event <span className="not-italic text-white/10">Coverage</span>
         </h2>
-      </div>
+      </header>
 
-      {/* Interactive Grid */}
-      <div className="flex flex-col lg:flex-row min-h-[70vh] lg:h-screen divide-y lg:divide-y-0 lg:divide-x divide-white/5 relative z-10">
-        {services.map((s) => {
-          const isActive = hovered === s.id || (isMobile && expandedId === s.id);
-
-          return (
-            <button
-              key={s.id}
-              onClick={() => handleServiceClick(s)}
-              onMouseEnter={() => setHovered(s.id)}
-              onMouseLeave={() => setHovered(null)}
-              className={`relative flex-1 group text-left transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden min-h-[140px] lg:min-h-full
-                ${hovered === s.id ? "lg:flex-[3]" : "lg:flex-1"} 
-                ${isMobile && expandedId === s.id ? "min-h-[500px]" : ""}
-              `}
-            >
-              {/* Image Layer */}
-              <div className="absolute inset-0 overflow-hidden bg-neutral-900">
-                <img
-                  src={s.img}
-                  className={`absolute inset-0 h-full w-full object-cover transition-all duration-[1s] ease-out
-                    ${isActive 
-                      ? "saturate-100 scale-100 brightness-90 opacity-100" 
-                      : "saturate-[0.4] scale-105 brightness-[0.6] opacity-80"
-                    }
-                  `}
-                  alt={s.title}
+      {/* MAIN CONTENT AREA */}
+      <main className="flex-1 min-h-0 relative z-10">
+        
+        {/* --- NEW PC DESIGN: DYNAMIC MOSAIC --- */}
+        {!isMobile && (
+          <div className="flex h-full w-full p-4 lg:p-8 gap-4">
+            {services.map((s) => (
+              <div
+                key={s.id}
+                onMouseEnter={() => setHoveredId(s.id)}
+                onMouseLeave={() => setHoveredId(null)}
+                onClick={() => handleServiceClick(s)}
+                className={`relative h-full transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] cursor-pointer overflow-hidden group
+                  ${hoveredId === s.id ? "flex-[3]" : "flex-1"}
+                `}
+              >
+                {/* Image */}
+                <img 
+                  src={s.img} 
+                  alt={s.title} 
+                  className={`absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 
+                    ${hoveredId && hoveredId !== s.id ? "brightness-[0.3] grayscale" : "brightness-[0.8]"}
+                  `} 
                 />
-                {/* Gradient Overlays: Subtle darkened edges for a cinematic feel */}
-                <div className={`absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/80 transition-opacity duration-700 ${isActive ? "opacity-30" : "opacity-50"}`} />
-              </div>
 
-              {/* Text Layer */}
-              <div className="relative h-full w-full p-6 lg:p-10 flex flex-col justify-between z-10">
-                <div className="flex justify-between items-start">
-                  <span className={`font-mono text-[10px] transition-colors duration-500 ${isActive ? "text-orange-400" : "text-white/40"}`}>
-                    {s.id}
-                  </span>
-                  <div className={`transition-all duration-500 transform ${isActive ? "rotate-0 opacity-100 text-orange-400" : "-rotate-45 opacity-0"}`}>
-                    <ArrowUpRight size={24} strokeWidth={1.5} />
-                  </div>
+                {/* Vertical Title (Visible when not hovered) */}
+                <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-500 ${hoveredId === s.id ? "opacity-0" : "opacity-100"}`}>
+                   <span className="rotate-90 whitespace-nowrap font-serif text-2xl tracking-widest text-white/30 uppercase">
+                     {s.title}
+                   </span>
                 </div>
 
-                <div className="mb-4">
-                  <h3 className={`text-2xl lg:text-5xl font-serif tracking-tight uppercase transition-all duration-700 leading-none
-                    ${isActive ? "italic text-white" : "text-white/60"}
-                  `}>
-                    {s.title}
-                  </h3>
-                  
-                  <p className={`text-[10px] uppercase tracking-[0.3em] mt-3 transition-colors duration-500 ${isActive ? "text-orange-400" : "text-white/30"}`}>
-                    {s.category}
+                {/* Hover Content (Overlay) */}
+                <div className={`absolute inset-0 flex flex-col justify-end p-8 bg-gradient-to-t from-black/90 via-transparent to-transparent transition-opacity duration-500 ${hoveredId === s.id ? "opacity-100" : "opacity-0"}`}>
+                  <span className="font-mono text-orange-500 text-xs mb-2">{s.id}</span>
+                  <h3 className="text-4xl font-serif italic mb-4">{s.title}</h3>
+                  <p className="text-sm text-white/60 font-light max-w-xs mb-6 leading-relaxed">
+                    {s.desc}
                   </p>
-
-                  <div className={`overflow-hidden transition-all duration-700 ease-in-out
-                    ${isActive ? "max-h-40 opacity-100 mt-6" : "max-h-0 opacity-0 mt-0"}
-                  `}>
-                    <p className="text-xs lg:text-sm text-white/70 leading-relaxed font-light max-w-[280px]">
-                      {s.desc}
-                    </p>
+                  <div className="flex items-center gap-2 text-orange-500 group">
+                    <span className="text-[10px] tracking-[0.2em] uppercase font-bold">Explore</span>
+                    <ArrowUpRight size={18} />
                   </div>
                 </div>
+
+                {/* Border Accent */}
+                <div className={`absolute inset-0 border border-white/5 transition-colors ${hoveredId === s.id ? "border-orange-500/30" : ""}`} />
               </div>
+            ))}
+          </div>
+        )}
 
-              {/* Animated Accent Line */}
-              <div className={`absolute bottom-0 left-0 h-[3px] bg-orange-500 transition-all duration-700 ${isActive ? "w-full" : "w-0"}`} />
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Noise Effect */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay [background-image:url('https://grainy-gradients.vercel.app/noise.svg')]" />
+        {/* --- MOBILE VIEW: UNCHANGED --- */}
+        {isMobile && (
+          <div className="flex flex-col h-full w-full px-4 pb-4">
+            {services.map((s) => {
+              const isActive = expandedId === s.id;
+              return (
+                <div
+                  key={s.id}
+                  onClick={() => handleServiceClick(s)}
+                  className={`relative w-full border-b border-white/5 transition-all duration-700 ease-in-out flex flex-col justify-center overflow-hidden
+                    ${isActive ? "flex-[6]" : "flex-1"}
+                  `}
+                >
+                  <img src={s.img} className={`absolute inset-0 w-full h-full object-cover transition-all duration-1000 ${isActive ? "opacity-60 scale-100" : "opacity-20 scale-110 saturate-0"}`} alt={s.title} />
+                  <div className="relative px-8 z-10 flex flex-col">
+                    <div className="flex justify-between items-center">
+                      <h3 className={`text-2xl font-serif ${isActive ? "italic text-white" : "text-white/40"}`}>{s.title}</h3>
+                      <ArrowUpRight size={20} className={isActive ? "text-orange-500" : "opacity-20"} />
+                    </div>
+                    {isActive && (
+                      <div className="mt-4 animate-in fade-in slide-in-from-top-2 duration-500">
+                        <p className="text-xs text-white/60 font-light leading-relaxed">{s.desc}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </main>
     </section>
   );
 };
