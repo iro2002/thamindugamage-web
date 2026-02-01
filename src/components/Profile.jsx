@@ -1,145 +1,123 @@
-import React, { useEffect, useState, memo, useRef } from "react";
-import { ArrowRight, Instagram, Camera, MessageCircle } from "lucide-react";
+import React, { memo } from "react";
+import { ArrowRight, Instagram, Camera } from "lucide-react";
 import { motion } from "framer-motion";
 
+const REEL_IMAGES = Array.from({ length: 10 }, (_, i) => `https://picsum.photos/seed/${i + 10}/800/1200`);
+
 const Hero = () => {
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-  const raf = useRef(null);
-  const lastUpdate = useRef(0);
-
-  useEffect(() => {
-    // Disable mouse tracking on mobile devices for better performance
-    if (window.innerWidth < 768) return;
-
-    const handleMove = (e) => {
-      // Throttle updates to 60fps max
-      const now = Date.now();
-      if (now - lastUpdate.current < 16) return;
-      lastUpdate.current = now;
-
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-
-      if (raf.current) cancelAnimationFrame(raf.current);
-      raf.current = requestAnimationFrame(() => setMousePos({ x, y }));
-    };
-
-    window.addEventListener("mousemove", handleMove, { passive: true });
-    return () => {
-      window.removeEventListener("mousemove", handleMove);
-      if (raf.current) cancelAnimationFrame(raf.current);
-    };
-  }, []);
+  // We only need to duplicate once for a seamless loop if logic is correct
+  const duplicatedReel = [...REEL_IMAGES, ...REEL_IMAGES];
 
   const openWhatsApp = () => {
-    const number = "94 71 744 1271"; // REPLACE WITH YOUR NUMBER
-    const message = encodeURIComponent("Hello Thamindu! I would like to secure a date for a photoshoot.");
+    const number = "94717441271";
+    const message = encodeURIComponent("Hello Thamindu! I would like to secure a date.");
     window.open(`https://wa.me/${number}?text=${message}`, "_blank");
   };
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-[#0a0a0a] text-white selection:bg-white selection:text-black">
-      {/* Decorative Outer Frame */}
-      <div className="absolute inset-4 border border-white/5 pointer-events-none z-50" />
-
-      {/* Background Image with Parallax */}
-      <div className="absolute inset-0 z-0">
-        <motion.img
-          initial={{ scale: 1.2, opacity: 0 }}
-          animate={{ scale: 1.1, opacity: 0.5 }}
-          transition={{ duration: 2, ease: "easeOut" }}
-          src="https://images.unsplash.com/photo-1590189703942-41b170fa6719?q=80&w=1170&auto=format&fit=crop"
-          alt="Thamindu Gamage Photography"
-          className="h-full w-full object-cover grayscale-[20%]"
-          style={{
-            transform: `translate(${(mousePos.x - 50) * 0.005}%, ${(mousePos.y - 50) * 0.005}%)`,
-            filter: "contrast(1.1) brightness(0.7)",
+    <section className="relative h-screen w-full overflow-hidden bg-[#050505] text-white isolation-auto">
+      {/* Background Camera Reel Animation */}
+      <div className="absolute inset-0 z-0 opacity-60 grayscale-[40%] pointer-events-none">
+        <motion.div 
+          className="flex h-full items-center"
+          style={{ 
+            width: "max-content", 
             willChange: "transform",
+            transform: "translateZ(0)" // Force GPU acceleration
           }}
-          draggable="false"
-          loading="eager"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-black/60" />
+          animate={{ x: [0, "-50%"] }} 
+          transition={{ 
+            duration: 40, // Slightly faster feels smoother than jittery slow
+            repeat: Infinity, 
+            ease: "linear" 
+          }}
+        >
+          {duplicatedReel.map((url, i) => (
+            <div 
+              key={i} 
+              className="relative h-screen w-[30vw] min-w-[300px] flex-none bg-[#111] overflow-hidden"
+            >
+              {/* Optimized Film Perforations using CSS Gradients instead of 12 divs */}
+              <div 
+                className="absolute left-4 top-0 bottom-0 w-2 opacity-20"
+                style={{
+                  backgroundImage: "linear-gradient(to bottom, white 16px, transparent 16px)",
+                  backgroundSize: "100% 32px"
+                }}
+              />
+              
+              <img 
+                src={url} 
+                alt="Reel" 
+                className="h-full w-full object-cover transform-gpu" 
+                loading="lazy"
+              />
+
+              <div 
+                className="absolute right-4 top-0 bottom-0 w-2 opacity-20"
+                style={{
+                  backgroundImage: "linear-gradient(to bottom, white 16px, transparent 16px)",
+                  backgroundSize: "100% 32px"
+                }}
+              />
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Gradient Overlays - Added 'pointer-events-none' to ensure no interaction lag */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-transparent to-[#050505] z-10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050505] via-transparent to-[#050505] z-10 pointer-events-none" />
       </div>
 
-      {/* Interactive Spotlight - Hidden on mobile for performance */}
-      <div
-        className="pointer-events-none absolute inset-0 z-10 opacity-60 hidden md:block"
-        style={{
-          background: `radial-gradient(800px circle at ${mousePos.x}% ${mousePos.y}%, rgba(255,255,255,0.08), transparent 100%)`,
-          willChange: "background",
-        }}
-      />
-
-      {/* Content */}
-      <div className="relative z-20 flex h-full flex-col items-center justify-center px-6">
+      {/* Main Content */}
+      <div className="relative z-30 flex h-full flex-col items-center justify-center px-6 text-center">
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.5 }}
-          className="flex flex-col items-center text-center"
+          initial={{ opacity: 0, y: 20 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 1, ease: "easeOut" }}
         >
-          {/* Brand Title */}
           <h1 className="cursor-default">
-            <span className="block font-serif text-5xl md:text-8xl lg:text-9xl font-extralight tracking-tighter leading-[0.9]">
-              THAMINDU{" "}
-              <span className="italic font-light text-white/40">GAMAGE</span>
+            <span className="block font-serif text-6xl md:text-9xl font-extralight tracking-tighter leading-tight">
+              THAMINDU <span className="italic text-white/30 font-light">GAMAGE</span>
             </span>
-            <span className="mt-6 block text-[10px] md:text-xs font-bold uppercase tracking-[1em] text-white/50">
-              Photography
+            <span className="mt-6 block text-[10px] md:text-xs font-bold uppercase tracking-[1.2em] text-white/60">
+              Photography Archive
             </span>
           </h1>
+          
+          <p className="mt-12 text-[10px] md:text-xs uppercase tracking-[0.4em] text-white/40 italic">
+            “Every captured moment is a story waiting to be told.”
+          </p>
 
-          <div className="mt-12 h-px w-16 bg-white/20" />
-
-          {/* Quote + Buttons */}
-          <div className="mt-12 max-w-xl space-y-10">
-            <p className="text-xs md:text-sm font-light leading-relaxed tracking-[0.2em] text-white/40 uppercase">
-              “Every captured moment is a story waiting to be told.”
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 pt-4">
-              {/* Gallery Link */}
-              <a
-                href="#gallery"
-                className="group relative text-[10px] font-bold uppercase tracking-[0.4em] text-white/80 transition"
-              >
-                <span className="relative z-10">View Gallery</span>
-                <span className="absolute -bottom-2 left-0 h-[1px] w-full bg-white/20 origin-right scale-x-0 transition-transform duration-500 group-hover:scale-x-100 group-hover:origin-left" />
-                <ArrowRight size={14} className="inline-block ml-3 transition-transform group-hover:translate-x-2" />
-              </a>
-
-              {/* Secure Date Button (WhatsApp) */}
-              <button
-                onClick={openWhatsApp}
-                className="group relative flex items-center gap-3 overflow-hidden rounded-full border border-white/10 bg-white/[0.03] px-10 py-4 text-[10px] font-bold uppercase tracking-[0.3em] backdrop-blur-xl transition-all hover:bg-white hover:text-black"
-              >
-         
-                Secure a Date
-              </button>
-            </div>
+          <div className="mt-16 flex flex-col sm:flex-row gap-10 justify-center items-center">
+            <a 
+              href="#services" 
+              className="group text-[10px] font-bold uppercase tracking-[0.4em] text-white/80 hover:text-white transition-colors"
+            >
+              View Work 
+              <ArrowRight size={14} className="inline-block ml-2 transition-transform group-hover:translate-x-2" />
+            </a>
+            <button 
+              onClick={openWhatsApp} 
+              className="rounded-full border border-white/20 bg-white/10 px-12 py-5 text-[10px] font-bold uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all active:scale-95"
+            >
+              Secure a Date
+            </button>
           </div>
         </motion.div>
       </div>
 
-      {/* Sidebar UI */}
-      <div className="absolute bottom-12 left-12 z-30 hidden lg:flex items-center gap-8 text-white/30">
+      {/* Side HUD UI */}
+      <div className="absolute bottom-12 left-12 hidden lg:flex items-center gap-6 opacity-40 z-40">
         <div className="flex flex-col gap-6">
-          <a href="https://instagram.com/" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
-            <Instagram size={16} strokeWidth={1.5} />
-          </a>
-          <span className="h-5 w-5 rounded-full border border-white/10 grid place-items-center">
-            <Camera size={12} strokeWidth={1.5} />
-          </span>
+          <Instagram size={18} className="hover:text-white cursor-pointer transition-colors" />
+          <Camera size={18} className="hover:text-white cursor-pointer transition-colors" />
         </div>
-        <div className="h-20 w-[1px] bg-white/10" />
-        <p className="text-[8px] [writing-mode:vertical-lr] uppercase tracking-[0.5em] font-medium">
-          Scroll to discover
-        </p>
+        <div className="h-20 w-[1px] bg-white/30" />
+        <span className="text-[9px] font-medium uppercase tracking-[0.3em] [writing-mode:vertical-lr]">
+          EST_2024.ARCHIVE
+        </span>
       </div>
-
-      {/* Grain Texture */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay [background-image:url('https://grainy-gradients.vercel.app/noise.svg')]" />
     </section>
   );
 };
