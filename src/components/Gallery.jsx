@@ -38,62 +38,83 @@ const ALBUMS = [
   { id: "05", title: "මන්දෝදරි 2025", year: "2025", images: [a5_1, a5_2, a5_3, a5_4, a5_5], fbLink: "#" }
 ];
 
+// --- VARIANTS: NO GAP TRANSITION ---
+const sliderVariants = {
+  enter: (direction) => ({
+    x: direction > 0 ? "100%" : "-100%",
+    opacity: 1, // Keep opacity high to prevent black flickering
+  }),
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction) => ({
+    zIndex: 0,
+    x: direction < 0 ? "100%" : "-100%",
+    opacity: 0.5, // Subtle fade out as it slides away
+  })
+};
+
 const AlbumSection = ({ album }) => {
   const [[page, direction], setPage] = useState([0, 0]);
+
   const paginate = (newDirection) => {
     const nextIndex = (page + newDirection + album.images.length) % album.images.length;
     setPage([nextIndex, newDirection]);
   };
-  const variants = {
-    enter: (dir) => ({ x: dir > 0 ? 300 : -300, opacity: 0, scale: 1.05 }),
-    center: { zIndex: 1, x: 0, opacity: 1, scale: 1 },
-    exit: (dir) => ({ zIndex: 0, x: dir < 0 ? 300 : -300, opacity: 0, scale: 0.95 })
-  };
 
   return (
-    <section id="gallery" className="w-full py-16 border-b border-white/5 bg-[#050505]">
+    <section className="w-full py-20 border-b border-white/5 bg-[#050505]">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-            <span className="text-[10px] uppercase tracking-[0.8em] text-orange-500/60 font-bold block mb-2">Vol. {album.id} — {album.year}</span>
-            <h2 className="text-4xl md:text-6xl font-serif italic font-light tracking-tighter">{album.title}</h2>
-          </motion.div>
-          <motion.a href={album.fbLink} target="_blank" rel="noopener noreferrer" whileHover={{ scale: 1.05 }} className="flex items-center gap-3 px-6 py-3 bg-white/[0.03] border border-white/10 rounded-full hover:bg-[#1877F2]/20 transition-all group">
-            <span className="text-[10px] uppercase tracking-[0.2em] font-medium">Full Album</span>
-            <ExternalLink size={12} className="opacity-30 group-hover:opacity-100" />
-          </motion.a>
+        <div className="flex justify-between items-end mb-10">
+          <div>
+            <span className="text-[10px] tracking-[0.8em] text-white/20 uppercase font-bold block mb-2">Collection {album.id}</span>
+            <h2 className="text-4xl md:text-6xl font-serif italic tracking-tighter">{album.title}</h2>
+          </div>
+          <a href={album.fbLink} className="hidden md:flex items-center gap-2 text-[10px] uppercase tracking-widest opacity-40 hover:opacity-100 transition-opacity">
+            View Full <ExternalLink size={12} />
+          </a>
         </div>
-        <div className="relative group aspect-[16/10] md:aspect-[21/9] overflow-hidden bg-neutral-900 rounded-sm">
+
+        {/* --- THE NO-GAP SLIDER --- */}
+        <div className="relative aspect-[16/9] md:aspect-[21/9] overflow-hidden bg-neutral-900 shadow-2xl">
           <AnimatePresence initial={false} custom={direction} mode="popLayout">
             <motion.img 
               key={page} 
               src={album.images[page]} 
               custom={direction} 
-              variants={variants} 
+              variants={sliderVariants} 
               initial="enter" 
               animate="center" 
               exit="exit" 
               transition={{ 
-                x: { type: "spring", stiffness: 300, damping: 30 }, 
-                opacity: { duration: 0.3 } 
+                x: { duration: 1.8, ease: [0.16, 1, 0.3, 1] }, // Ultra slow ease
+                opacity: { duration: 1 } 
               }} 
-              className="absolute inset-0 w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500" 
-              loading="lazy"
-              style={{ willChange: "transform, opacity" }}
+              className="absolute inset-0 w-full h-full object-cover" 
             />
           </AnimatePresence>
-          <div className="absolute inset-0 flex justify-between items-center px-4 z-10">
-            <button onClick={() => paginate(-1)} className="p-4 rounded-full bg-black/40 backdrop-blur-xl border border-white/5 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:text-black"><ChevronLeft size={20} /></button>
-            <button onClick={() => paginate(1)} className="p-4 rounded-full bg-black/40 backdrop-blur-xl border border-white/5 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:text-black"><ChevronRight size={20} /></button>
+
+          {/* Navigation Controls */}
+          <div className="absolute inset-0 flex justify-between items-center px-4 z-20">
+            <button onClick={() => paginate(-1)} className="p-4 rounded-full bg-black/40 text-white hover:bg-white hover:text-black transition-all group">
+              <ChevronLeft size={24} className="group-active:scale-90 transition-transform" />
+            </button>
+            <button onClick={() => paginate(1)} className="p-4 rounded-full bg-black/40 text-white hover:bg-white hover:text-black transition-all group">
+              <ChevronRight size={24} className="group-active:scale-90 transition-transform" />
+            </button>
           </div>
         </div>
-        <div className="mt-8 flex justify-between items-center">
-          <div className="flex gap-2">
-            {album.images.map((_, i) => (
-              <button key={i} onClick={() => setPage([i, i > page ? 1 : -1])} className={`h-[2px] transition-all duration-700 ${i === page ? "w-12 bg-white" : "w-3 bg-white/10"}`} />
-            ))}
-          </div>
-          <span className="text-[10px] font-mono text-white/20 tracking-widest">{String(page + 1).padStart(2, '0')} / {String(album.images.length).padStart(2, '0')}</span>
+
+        {/* Pagination Line */}
+        <div className="mt-10 flex gap-2">
+          {album.images.map((_, i) => (
+            <div 
+              key={i} 
+              className={`h-[1px] transition-all duration-1000 ease-in-out ${i === page ? "w-20 bg-white" : "w-6 bg-white/10"}`} 
+            />
+          ))}
         </div>
       </div>
     </section>
@@ -102,18 +123,17 @@ const AlbumSection = ({ album }) => {
 
 const Gallery = () => {
   return (
-    <div className="bg-[#050505] text-white selection:bg-orange-500/30 font-sans antialiased">
-      <div className="h-[40vh] flex flex-col justify-end px-6 max-w-7xl mx-auto pb-12 w-full">
-        <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1 }}>
-          <span className="text-[11px] uppercase tracking-[1.2em] text-white/20 mb-4 block">Archive Collections</span>
-          <h1 className="text-6xl lg:text-9xl font-serif italic tracking-tighter text-white/95 leading-none">Gallery <span className="not-italic text-white/5 uppercase text-4xl lg:text-7xl">Archive</span></h1>
-        </motion.div>
+    <div className="bg-[#050505] text-white overflow-hidden">
+      <div className="h-[30vh] flex items-end px-6 max-w-7xl mx-auto pb-10">
+        <h1 className="text-6xl md:text-8xl font-serif italic tracking-tighter">Collections.</h1>
       </div>
       <div className="flex flex-col">
-        {ALBUMS.map((album) => <AlbumSection key={album.id} album={album} />)}
+        {ALBUMS.map((album) => (
+          <AlbumSection key={album.id} album={album} />
+        ))}
       </div>
-      <footer className="py-20 text-center">
-        <p className="opacity-20 text-[10px] tracking-[1.5em] uppercase">Thamindu Gamage Photography</p>
+      <footer className="py-20 opacity-10 text-center text-[10px] tracking-[1.5em] uppercase">
+        Thamindu Gamage Photography
       </footer>
     </div>
   );
