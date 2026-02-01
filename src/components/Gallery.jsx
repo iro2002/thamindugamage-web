@@ -42,7 +42,7 @@ const ALBUMS = [
 const sliderVariants = {
   enter: (direction) => ({
     x: direction > 0 ? "100%" : "-100%",
-    opacity: 1, // Keep opacity high to prevent black flickering
+    opacity: 1, 
   }),
   center: {
     zIndex: 1,
@@ -98,11 +98,18 @@ const AlbumSection = ({ album }) => {
 
           {/* Navigation Controls */}
           <div className="absolute inset-0 flex justify-between items-center px-4 z-20">
-            <button onClick={() => paginate(-1)} className="p-4 rounded-full bg-black/40 text-white hover:bg-white hover:text-black transition-all group">
-              <ChevronLeft size={24} className="group-active:scale-90 transition-transform" />
+            <button 
+              onClick={() => paginate(-1)} 
+              className="p-2 md:p-4 rounded-full bg-black/40 text-white hover:bg-white hover:text-black transition-all group"
+            >
+              <ChevronLeft className="w-4 h-4 md:w-6 md:h-6 group-active:scale-90 transition-transform" />
             </button>
-            <button onClick={() => paginate(1)} className="p-4 rounded-full bg-black/40 text-white hover:bg-white hover:text-black transition-all group">
-              <ChevronRight size={24} className="group-active:scale-90 transition-transform" />
+            
+            <button 
+              onClick={() => paginate(1)} 
+              className="p-2 md:p-4 rounded-full bg-black/40 text-white hover:bg-white hover:text-black transition-all group"
+            >
+              <ChevronRight className="w-4 h-4 md:w-6 md:h-6 group-active:scale-90 transition-transform" />
             </button>
           </div>
         </div>
