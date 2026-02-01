@@ -15,14 +15,7 @@ const DUPLICATED_IMAGES = [...IMAGES, ...IMAGES];
 const Extra = () => {
   return (
     <div style={container}>
-      {/* HUD OVERLAY - Kept simple for performance */}
-      <div style={hudOverlay}>
-        <div style={topInfo}>
-          <span style={monoText}><span style={redDotInline} /> AUTO_PLAY ON</span>
-          <span style={centerLogo}>PHANTOM_ARCHIVE.SYS</span>
-          <span style={monoText}>60FPS / OPTIMIZED</span>
-        </div>
-      </div>
+      
 
       <div style={reelContainer}>
         <motion.div 
