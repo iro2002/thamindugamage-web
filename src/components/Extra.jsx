@@ -1,214 +1,172 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+// 1. Move data outside the component to prevent re-calculations on every render
+const IMAGES = Array.from({ length: 12 }, (_, i) => ({ // Reduced count for memory
+  id: i,
+  url: `https://picsum.photos/seed/${i + 900}/600/400`, // Lower res for better performance
+  title: `VOL_0${i + 1}`,
+  color: ['#00f2ff', '#7000ff', '#ff0055', '#39ff14'][i % 4],
+  width: i % 3 === 0 ? 400 : 250 // Numbers instead of strings for easier math
+}));
+
+const DUPLICATED_IMAGES = [...IMAGES, ...IMAGES];
+
 const Extra = () => {
-  const images = Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    url: `https://picsum.photos/seed/${i + 900}/1200/800`,
-    title: `VOL_0${i + 1}`,
-    color: ['#00f2ff', '#7000ff', '#ff0055', '#39ff14'][i % 4],
-    width: i % 3 === 0 ? '550px' : '350px' // Mixes large and small for professional look
-  }));
-
-  // We double the array to create a seamless infinite loop effect
-  const duplicatedImages = [...images, ...images];
-
   return (
     <div style={container}>
-      {/* 1. CAMERA UI OVERLAY (Professional HUD) */}
+      {/* HUD OVERLAY - Kept simple for performance */}
       <div style={hudOverlay}>
         <div style={topInfo}>
-          <div style={statusGroup}>
-            <div style={redDot} />
-            <span style={monoText}>AUTO_PLAY ON</span>
-          </div>
+          <span style={monoText}><span style={redDotInline} /> AUTO_PLAY ON</span>
           <span style={centerLogo}>PHANTOM_ARCHIVE.SYS</span>
-          <span style={monoText}>24FPS / RAW</span>
+          <span style={monoText}>60FPS / OPTIMIZED</span>
         </div>
-        <div style={cornerDecor} />
       </div>
 
-      {/* 2. THE AUTO-MOVING REEL */}
       <div style={reelContainer}>
         <motion.div 
           style={track}
-          animate={{ x: [0, -5000] }} // Adjust based on total width
+          animate={{ x: [0, -2500] }} // Adjusted for shorter array
           transition={{ 
-            duration: 50, 
+            duration: 30, 
             repeat: Infinity, 
-            ease: "linear",
-            pauseOnHover: true // Professional touch: stops when you look at an image
+            ease: "linear" 
           }}
         >
-          {duplicatedImages.map((img, i) => (
-            <motion.div 
-              key={i} 
-              style={{...frame, minWidth: img.width}}
-              whileHover={{ scale: 1.02, y: -10 }}
-            >
-              <div style={sprocketTop} />
+          {DUPLICATED_IMAGES.map((img, i) => (
+            <div key={i} style={{...frame, minWidth: img.width}}>
+              <div style={sprocket} />
               
               <div style={imageBox}>
-                {/* Glow effect matching the image theme */}
-                <div style={{...neonGlow, backgroundColor: img.color}} />
+                {/* Removed the heavy blur filter 'neonGlow' as it causes massive GPU lag */}
+                <img 
+                  src={img.url} 
+                  alt="reel" 
+                  style={imgStyle} 
+                  loading="lazy" // Critical for memory
+                />
                 
-                <img src={img.url} alt="reel" style={imgStyle} />
-                
-                {/* Metadata Panel */}
                 <div style={label}>
                   <div style={{...colorTag, backgroundColor: img.color}} />
                   <span style={labelTitle}>{img.title}</span>
                 </div>
               </div>
 
-              <div style={sprocketBottom} />
-            </motion.div>
+              <div style={sprocket} />
+            </div>
           ))}
         </motion.div>
       </div>
 
-      {/* 3. CENTER SCANNER (Professional Aesthetic) */}
-      <div style={scannerCenter} />
       <div style={vignette} />
     </div>
   );
 };
 
-// --- STYLES ---
+// --- OPTIMIZED STYLES ---
 
 const container = {
-  backgroundColor: '#000',
+  backgroundColor: '#050505',
   height: '100vh',
   width: '100vw',
   overflow: 'hidden',
   display: 'flex',
   alignItems: 'center',
-  fontFamily: '"JetBrains Mono", monospace',
+  fontFamily: 'monospace',
 };
 
 const reelContainer = {
   width: '100%',
-  overflow: 'visible',
   display: 'flex',
-  alignItems: 'center',
+  perspective: '1000px', // Adds depth without cost
 };
 
 const track = {
   display: 'flex',
-  gap: '40px',
-  paddingLeft: '20px',
+  gap: '20px',
+  willChange: 'transform', // Tells the browser to use the GPU
 };
 
 const frame = {
-  position: 'relative',
-  height: '400px',
+  height: '320px', // Slightly smaller
   background: '#111',
-  padding: '10px 0',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'space-between',
-  cursor: 'pointer',
-  border: '1px solid rgba(255,255,255,0.05)',
-  transition: 'border 0.3s ease',
+  border: '1px solid #222',
 };
 
 const imageBox = {
   position: 'relative',
-  width: '100%',
-  height: '100%',
+  flexGrow: 1,
   overflow: 'hidden',
+  background: '#000',
 };
 
 const imgStyle = {
   width: '100%',
   height: '100%',
   objectFit: 'cover',
-  zIndex: 2,
-  position: 'relative',
+  opacity: 0.8, // Faster to render than complex filters
 };
 
-const neonGlow = {
-  position: 'absolute',
-  inset: 0,
-  filter: 'blur(50px)',
-  opacity: 0.25,
-  zIndex: 1,
-};
-
-const sprocketTop = {
-  height: '20px',
+const sprocket = {
+  height: '12px',
   width: '100%',
-  background: 'repeating-linear-gradient(90deg, #000 0, #000 20px, #222 20px, #222 40px)',
-  marginBottom: '5px'
+  background: 'repeating-linear-gradient(90deg, #000 0, #000 10px, #333 10px, #333 20px)',
 };
-
-const sprocketBottom = { ...sprocketTop, marginBottom: 0, marginTop: '5px' };
 
 const hudOverlay = {
   position: 'fixed',
-  inset: 0,
+  top: 0, left: 0, right: 0,
   zIndex: 10,
-  pointerEvents: 'none',
-  padding: '40px'
+  padding: '20px',
+  pointerEvents: 'none'
 };
 
 const topInfo = {
   display: 'flex',
   justifyContent: 'space-between',
-  alignItems: 'center',
   color: '#fff',
+  fontSize: '10px',
+  letterSpacing: '1px',
   borderBottom: '1px solid rgba(255,255,255,0.1)',
-  paddingBottom: '15px'
+  paddingBottom: '10px'
 };
 
-const statusGroup = { display: 'flex', alignItems: 'center', gap: '10px' };
-const redDot = { width: '8px', height: '8px', background: '#f00', borderRadius: '50%', boxShadow: '0 0 10px #f00' };
-const monoText = { fontSize: '11px', letterSpacing: '2px', opacity: 0.5 };
-const centerLogo = { letterSpacing: '8px', fontWeight: '900', fontSize: '14px' };
+const redDotInline = {
+  display: 'inline-block',
+  width: '6px',
+  height: '6px',
+  background: '#f00',
+  borderRadius: '50%',
+  marginRight: '5px'
+};
+
+const monoText = { opacity: 0.6 };
+const centerLogo = { fontWeight: 'bold' };
 
 const label = {
   position: 'absolute',
-  bottom: '20px',
-  left: '20px',
+  bottom: '10px',
+  left: '10px',
   display: 'flex',
   alignItems: 'center',
-  gap: '10px',
-  zIndex: 3,
-  background: 'rgba(0,0,0,0.7)',
-  padding: '5px 12px',
-  backdropFilter: 'blur(5px)'
+  gap: '8px',
+  background: 'rgba(0,0,0,0.8)',
+  padding: '4px 8px',
 };
 
-const colorTag = { width: '4px', height: '15px' };
-const labelTitle = { color: '#fff', fontSize: '10px', fontWeight: 'bold' };
-
-const scannerCenter = {
-  position: 'fixed',
-  left: '50%',
-  width: '1px',
-  height: '60%',
-  background: 'rgba(0,242,255,0.3)',
-  boxShadow: '0 0 20px rgba(0,242,255,0.5)',
-  zIndex: 5,
-  pointerEvents: 'none'
-};
+const colorTag = { width: '2px', height: '10px' };
+const labelTitle = { color: '#fff', fontSize: '9px' };
 
 const vignette = {
   position: 'fixed',
   inset: 0,
-  background: 'radial-gradient(circle, transparent 30%, #000 100%)',
-  zIndex: 4,
-  pointerEvents: 'none'
-};
-
-const cornerDecor = {
-  position: 'absolute',
-  bottom: '40px',
-  right: '40px',
-  width: '100px',
-  height: '100px',
-  borderRight: '1px solid rgba(255,255,255,0.2)',
-  borderBottom: '1px solid rgba(255,255,255,0.2)'
+  background: 'radial-gradient(circle, transparent 50%, #000 120%)',
+  pointerEvents: 'none',
+  zIndex: 5
 };
 
 export default Extra;
