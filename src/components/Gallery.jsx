@@ -65,7 +65,7 @@ const AlbumSection = ({ album }) => {
   };
 
   return (
-    <section className="w-full py-20 border-b border-white/5 bg-[#050505]">
+    <section id ="gallery" className="w-full py-20 border-b border-white/5 bg-[#050505]">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex justify-between items-end mb-10">
           <div>
