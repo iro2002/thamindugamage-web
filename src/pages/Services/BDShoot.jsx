@@ -14,6 +14,7 @@ export default function BDShoot() {
             src="https://images.unsplash.com/photo-1530103043960-ef38714abb15?q=80&w=2070" 
             alt="Birthday Shoot" 
             className="w-full h-full object-cover grayscale-[0.2]"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-[#050505]" />
         </div>

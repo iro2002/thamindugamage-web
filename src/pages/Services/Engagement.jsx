@@ -14,6 +14,7 @@ export default function Engagement() {
             src="https://www.graduate.sjp.ac.lk/wp-content/uploads/2025/09/50th-Convocation.jpg" 
             alt="Engagement" 
             className="w-full h-full object-cover grayscale-[0.2]"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-[#050505]" />
         </div>

@@ -54,7 +54,7 @@ const AlbumSection = ({ album }) => {
     <section id="gallery" className="w-full py-16 border-b border-white/5 bg-[#050505]">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
             <span className="text-[10px] uppercase tracking-[0.8em] text-orange-500/60 font-bold block mb-2">Vol. {album.id} — {album.year}</span>
             <h2 className="text-4xl md:text-6xl font-serif italic font-light tracking-tighter">{album.title}</h2>
           </motion.div>
@@ -65,7 +65,22 @@ const AlbumSection = ({ album }) => {
         </div>
         <div className="relative group aspect-[16/10] md:aspect-[21/9] overflow-hidden bg-neutral-900 rounded-sm">
           <AnimatePresence initial={false} custom={direction} mode="popLayout">
-            <motion.img key={page} src={album.images[page]} custom={direction} variants={variants} initial="enter" animate="center" exit="exit" transition={{ x: { type: "spring", stiffness: 260, damping: 26 }, opacity: { duration: 0.4 } }} className="absolute inset-0 w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-700" />
+            <motion.img 
+              key={page} 
+              src={album.images[page]} 
+              custom={direction} 
+              variants={variants} 
+              initial="enter" 
+              animate="center" 
+              exit="exit" 
+              transition={{ 
+                x: { type: "spring", stiffness: 300, damping: 30 }, 
+                opacity: { duration: 0.3 } 
+              }} 
+              className="absolute inset-0 w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 transition-all duration-500" 
+              loading="lazy"
+              style={{ willChange: "transform, opacity" }}
+            />
           </AnimatePresence>
           <div className="absolute inset-0 flex justify-between items-center px-4 z-10">
             <button onClick={() => paginate(-1)} className="p-4 rounded-full bg-black/40 backdrop-blur-xl border border-white/5 text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-white hover:text-black"><ChevronLeft size={20} /></button>

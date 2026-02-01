@@ -29,8 +29,19 @@ const Service = () => {
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 1024);
     check();
-    window.addEventListener("resize", check, { passive: true });
-    return () => window.removeEventListener("resize", check);
+    
+    // Debounce resize events for better performance
+    let resizeTimer;
+    const handleResize = () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(check, 150);
+    };
+    
+    window.addEventListener("resize", handleResize, { passive: true });
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(resizeTimer);
+    };
   }, []);
 
   const handleServiceClick = (s) => {
@@ -72,7 +83,8 @@ const Service = () => {
               gridTemplateColumns: getGridTemplate(),
               transition: 'grid-template-columns 700ms cubic-bezier(0.25, 1, 0.5, 1)',
               height: '100%',
-              gap: '12px'
+              gap: '12px',
+              willChange: hoveredId ? 'grid-template-columns' : 'auto'
             }}
           >
             {services.map((s) => (
@@ -88,6 +100,8 @@ const Service = () => {
                   src={s.img} 
                   alt={s.title} 
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105" 
+                  loading="lazy"
+                  style={{ willChange: hoveredId === s.id ? 'transform' : 'auto' }}
                 />
 
                 {/* Smooth Dark Overlay (Replaces laggy filters) */}
@@ -128,7 +142,7 @@ const Service = () => {
                   style={{ flexGrow: isActive ? 6 : 1, transition: 'flex-grow 500ms ease-in-out' }}
                   className="relative w-full border-b border-white/5 flex flex-col justify-center overflow-hidden"
                 >
-                  <img src={s.img} className="absolute inset-0 w-full h-full object-cover opacity-40" alt={s.title} />
+                  <img src={s.img} className="absolute inset-0 w-full h-full object-cover opacity-40" alt={s.title} loading="lazy" />
                   <div className="relative px-8 z-10 flex flex-col">
                     <div className="flex justify-between items-center w-full">
                       <h3 className={`text-2xl font-serif ${isActive ? "italic text-white" : "text-white/40"}`}>{s.title}</h3>

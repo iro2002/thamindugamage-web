@@ -14,6 +14,7 @@ export default function BabyShoot() {
             src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=2071" 
             alt="Baby Shoot" 
             className="w-full h-full object-cover grayscale-[0.2]"
+            loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-[#050505]" />
         </div>

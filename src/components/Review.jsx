@@ -11,19 +11,19 @@ const reviews = [
 const Review = () => {
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
+    visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
   };
 
   return (
     <section id="review" className="relative w-full bg-[#050505] text-white py-20 lg:py-32 px-6 overflow-hidden border-t border-white/[0.05]">
-      <motion.div initial={{ height: 0 }} whileInView={{ height: "100%" }} viewport={{ once: true }} transition={{ duration: 1.5 }} className="absolute top-0 right-1/3 w-px bg-white/[0.03] hidden lg:block" />
+      <motion.div initial={{ height: 0 }} whileInView={{ height: "100%" }} viewport={{ once: true }} transition={{ duration: 1 }} className="absolute top-0 right-1/3 w-px bg-white/[0.03] hidden lg:block" />
       <div className="relative z-10 max-w-7xl mx-auto">
-        <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+        <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="max-w-2xl">
              <div className="w-full lg:w-[55%]"></div>
            <span className="text-[9px] lg:text-[10px] uppercase tracking-[0.5em] text-orange-500 font-bold">

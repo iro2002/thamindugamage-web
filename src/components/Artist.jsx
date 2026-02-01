@@ -5,6 +5,7 @@ import thaminduPng from "../gallery/service/thamindu.png";
 const Artist = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
+  const lastUpdate = useRef(0);
 
   const mX = useMotionValue(0);
   const mY = useMotionValue(0);
@@ -18,13 +19,21 @@ const Artist = () => {
   const pngY = useTransform(scrollYProgress, [0, 1], [0, -100]);
 
   useEffect(() => {
+    // Disable mouse tracking on mobile for better performance
+    if (window.innerWidth < 1024) return;
+
     const handleMove = (e) => {
+      // Throttle to max 30fps for smoother performance
+      const now = Date.now();
+      if (now - lastUpdate.current < 33) return;
+      lastUpdate.current = now;
+
       const x = (e.clientX / window.innerWidth - 0.5) * 20;
       const y = (e.clientY / window.innerHeight - 0.5) * 20;
       mX.set(x);
       mY.set(y);
     };
-    window.addEventListener("mousemove", handleMove);
+    window.addEventListener("mousemove", handleMove, { passive: true });
     return () => window.removeEventListener("mousemove", handleMove);
   }, [mX, mY]);
 
@@ -36,10 +45,15 @@ const Artist = () => {
     >
       {/* Background Parallax Silhouette */}
       <motion.div 
-        style={{ y: pngY, x: useTransform(springX, (val) => val * -1), disappearance: useTransform(scrollYProgress, [0.5, 1], [1, 0]) }}
-        className="absolute right-[-10%] bottom-[-5%] w-[90%] lg:w-[50%] h-auto opacity-[0.08] pointer-events-none z-0 select-none grayscale contrast-125"
+        style={{ 
+          y: pngY, 
+          x: useTransform(springX, (val) => val * -1), 
+          opacity: useTransform(scrollYProgress, [0.5, 1], [0.08, 0]),
+          willChange: "transform, opacity"
+        }}
+        className="absolute right-[-10%] bottom-[-5%] w-[90%] lg:w-[50%] h-auto pointer-events-none z-0 select-none grayscale contrast-125"
       >
-        <img src={thaminduPng} alt="" className="w-full h-full object-contain" />
+        <img src={thaminduPng} alt="" className="w-full h-full object-contain" loading="lazy" />
       </motion.div>
 
       <div className="max-w-7xl mx-auto relative z-20">
@@ -59,10 +73,11 @@ const Artist = () => {
             <div className="relative aspect-[4/5] overflow-hidden bg-neutral-900 ring-1 ring-white/10">
               <motion.img
                 whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.8 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 src="https://scontent.fcmb10-1.fna.fbcdn.net/v/t39.30808-6/594542645_855925930164036_4166289582778905339_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=z_FOt0eTbBkQ7kNvwGkPRnx&_nc_oc=Adndhc4tocX9Hrpc6ivsM7nURoURzFwUYbePzz4EmoSgqUu6xQWrMziIhdP2O7WaIzk&_nc_zt=23&_nc_ht=scontent.fcmb10-1.fna&_nc_gid=5tN0QBxRfA3EzpyAx6YXdQ&oh=00_AfuxCOz958g3mHqOWQH72pRmVE6oaDuRAzyAxqECrpRbfA&oe=6983ADFE"
                 alt="Thamindu Portrait"
                 className="w-full h-full object-cover grayscale-[0.2]"
+                style={{ willChange: "transform" }}
                 loading="lazy"
               />
             </div>

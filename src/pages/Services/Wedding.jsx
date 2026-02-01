@@ -17,6 +17,7 @@ const ServiceDetailTemplate = ({ title, category, description, image, id }) => {
             src={image} 
             alt={title} 
             className="w-full h-full object-cover grayscale-[0.2]"
+            loading="eager"
           />
           {/* Deep gradient for text readability */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-[#050505]" />

@@ -16,7 +16,7 @@ export default function PreShoot() {
     <div className="bg-[#050505] text-white selection:bg-orange-500/30">
       <section className="relative h-[70vh] w-full">
         <div className="absolute inset-0 z-0">
-          <img src={data.image} alt={data.title} className="w-full h-full object-cover grayscale-[0.2]" />
+          <img src={data.image} alt={data.title} className="w-full h-full object-cover grayscale-[0.2]" loading="eager" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-[#050505]" />
         </div>
         <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-16 lg:p-24">

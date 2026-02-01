@@ -5,9 +5,18 @@ import { motion } from "framer-motion";
 const Hero = () => {
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const raf = useRef(null);
+  const lastUpdate = useRef(0);
 
   useEffect(() => {
+    // Disable mouse tracking on mobile devices for better performance
+    if (window.innerWidth < 768) return;
+
     const handleMove = (e) => {
+      // Throttle updates to 60fps max
+      const now = Date.now();
+      if (now - lastUpdate.current < 16) return;
+      lastUpdate.current = now;
+
       const x = (e.clientX / window.innerWidth) * 100;
       const y = (e.clientY / window.innerHeight) * 100;
 
@@ -43,19 +52,22 @@ const Hero = () => {
           alt="Thamindu Gamage Photography"
           className="h-full w-full object-cover grayscale-[20%]"
           style={{
-            transform: `translate(${(mousePos.x - 50) * 0.01}%, ${(mousePos.y - 50) * 0.01}%)`,
+            transform: `translate(${(mousePos.x - 50) * 0.005}%, ${(mousePos.y - 50) * 0.005}%)`,
             filter: "contrast(1.1) brightness(0.7)",
+            willChange: "transform",
           }}
           draggable="false"
+          loading="eager"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-black/60" />
       </div>
 
-      {/* Interactive Spotlight */}
+      {/* Interactive Spotlight - Hidden on mobile for performance */}
       <div
-        className="pointer-events-none absolute inset-0 z-10 opacity-60"
+        className="pointer-events-none absolute inset-0 z-10 opacity-60 hidden md:block"
         style={{
           background: `radial-gradient(800px circle at ${mousePos.x}% ${mousePos.y}%, rgba(255,255,255,0.08), transparent 100%)`,
+          willChange: "background",
         }}
       />
 
