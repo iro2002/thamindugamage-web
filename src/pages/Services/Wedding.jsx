@@ -73,7 +73,7 @@ const ServiceDetailTemplate = ({ title, category, description, image, id }) => {
               </li>
               <li className="flex justify-between text-sm">
                 <span className="text-white/40">Location</span>
-                <span>Worldwide</span>
+                <span>Colombo</span>
               </li>
             </ul>
             <button className="w-full py-4 bg-orange-600 hover:bg-white hover:text-black transition-all duration-500 uppercase text-[10px] tracking-[0.3em] font-bold flex items-center justify-center gap-3">
