@@ -1,17 +1,77 @@
-// src/pages/Services/BDShoot.jsx
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Camera, Clock, Send, Zap } from "lucide-react";
 
 export default function BDShoot() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
-    <section className="min-h-screen bg-[#0a0a0a] text-white p-8 lg:p-20">
-      <Link to="/services" className="text-orange-400 text-xs uppercase tracking-[0.3em]">
-        ← Back to Services
-      </Link>
-      <h1 className="mt-6 text-5xl lg:text-7xl font-serif italic tracking-tight">BD Shoot</h1>
-      <p className="mt-4 max-w-2xl text-white/60 text-sm leading-relaxed">
-        High-energy celebrations documented with artistic flair.
-      </p>
-    </section>
+    <div className="bg-[#050505] text-white selection:bg-orange-500/30">
+      <section className="relative h-[70vh] w-full">
+        <div className="absolute inset-0 z-0">
+          <img 
+            src="https://images.unsplash.com/photo-1530103043960-ef38714abb15?q=80&w=2070" 
+            alt="Birthday Shoot" 
+            className="w-full h-full object-cover grayscale-[0.2]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-[#050505]" />
+        </div>
+
+        <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-16 lg:p-24">
+            <span className="text-orange-500 font-mono text-xs md:text-sm tracking-[0.5em] mb-4 block">
+              05 / CELEBRATION
+            </span>
+            <h1 className="text-5xl md:text-8xl lg:text-9xl font-serif italic tracking-tighter leading-none mb-4">
+              BD Shoot
+            </h1>
+        </div>
+      </section>
+
+      <section className="px-6 md:px-16 lg:px-24 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+          <div className="lg:col-span-7">
+            <p className="text-lg md:text-2xl text-white/80 font-light leading-relaxed">
+              High-energy celebrations documented with artistic flair. We capture the pulse of the party and the genuine joy of your guests.
+            </p>
+            <div className="mt-12 space-y-8">
+              {[
+                { icon: <Zap size={24} />, t: "Candid Energy", d: "Unposed moments and raw excitement." },
+                { icon: <Clock size={24} />, t: "Fast Turnaround", d: "Ready for social sharing within days." }
+              ].map((item, idx) => (
+                <div key={idx} className="flex gap-6 items-start">
+                  <div className="text-orange-500 mt-1">{item.icon}</div>
+                  <div>
+                    <h4 className="text-xs uppercase tracking-widest font-bold mb-1">{item.t}</h4>
+                    <p className="text-white/40 text-sm italic">{item.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 bg-white/5 p-8 border border-white/10 rounded-sm h-fit">
+            <h3 className="text-xl font-serif italic mb-6">Event Details</h3>
+            <ul className="space-y-4 mb-8">
+              <li className="flex justify-between text-sm border-b border-white/5 pb-2">
+                <span className="text-white/40">Duration</span>
+                <span>Minimum 3 Hours</span>
+              </li>
+              <li className="flex justify-between text-sm border-b border-white/5 pb-2">
+                <span className="text-white/40">Delivery</span>
+                <span>7-10 Days</span>
+              </li>
+              <li className="flex justify-between text-sm">
+                <span className="text-white/40">Location</span>
+                <span>On-site</span>
+              </li>
+            </ul>
+            <button className="w-full py-4 bg-orange-600 hover:bg-white hover:text-black transition-all duration-500 uppercase text-[10px] tracking-[0.3em] font-bold flex items-center justify-center gap-3">
+              Check Dates <Send size={14} />
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

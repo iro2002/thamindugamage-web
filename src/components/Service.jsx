@@ -49,7 +49,9 @@ const Service = () => {
       <header className="flex-none pt-12 pb-8 px-8 lg:px-20 z-20">
         <div className="flex items-center gap-4 mb-3">
           <div className="w-8 h-px bg-orange-500" />
-          <span className="text-[10px] tracking-[0.4em] text-orange-500 font-mono uppercase">Services</span>
+          <span className="text-[9px] lg:text-[10px] uppercase tracking-[0.5em] text-orange-500 font-bold">
+                  Service
+                </span>
         </div>
         <h2 className="text-5xl lg:text-7xl font-serif italic tracking-tighter leading-none">
           Event <span className="not-italic text-white/10">Coverage</span>

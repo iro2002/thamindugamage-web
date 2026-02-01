@@ -25,6 +25,10 @@ const Review = () => {
       <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="max-w-2xl">
+             <div className="w-full lg:w-[55%]"></div>
+           <span className="text-[9px] lg:text-[10px] uppercase tracking-[0.5em] text-orange-500 font-bold">
+                  Service
+                </span>           
           
             <h2 className="text-5xl md:text-7xl font-light tracking-tighter leading-none">Trusted by <br /><span className="italic font-serif text-white/40">the visionary.</span></h2>
           </div>
