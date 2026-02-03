@@ -13,6 +13,7 @@ import Artist from "./components/Artist";
 import Gallery from "./components/Gallery";
 import Review from "./components/Review";
 import Extra from "./components/Extra";
+import Video  from "./components/Video";
 
 // Service pages
 import ServiceDetails from "./pages/Services/ServiceDetails";
@@ -25,6 +26,7 @@ function Home() {
       <Artist />
       <Review />
       <Gallery />
+      <Video />
       <Extra />
       <ContactPage />
     </main>

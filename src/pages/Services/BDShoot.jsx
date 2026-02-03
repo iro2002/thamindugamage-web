@@ -31,17 +31,24 @@ const ServiceDetailTemplate = ({ title, category, description, image }) => {
   return (
     <div className="bg-[#050505] text-white selection:bg-orange-500/30 overflow-x-hidden font-sans">
       
-      {/* NAVIGATION - Back Button */}
+      {/* NAVIGATION - Minimalist Back Button */}
       <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.5 }}
         className="fixed top-6 left-6 md:top-8 md:left-12 z-50"
       >
-     
+        <button 
+          onClick={() => navigate(-1)}
+          className="group flex items-center gap-3 text-[10px] tracking-[0.3em] uppercase font-bold bg-black/40 backdrop-blur-md border border-white/10 p-4 rounded-full hover:bg-orange-500 transition-all duration-500"
+        >
+          <ArrowLeft size={16} />
+          <span className="hidden md:block">Back</span>
+        </button>
       </motion.div>
 
-      {/* HERO SECTION */}
-      <section className="relative h-[70vh] md:h-screen w-full overflow-hidden">
+      {/* HERO SECTION - Reduced Height (75vh mobile / 85vh desktop) */}
+      <section className="relative h-[75vh] md:h-[85vh] w-full overflow-hidden">
         <motion.div 
           initial={{ scale: 1.1, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -51,9 +58,9 @@ const ServiceDetailTemplate = ({ title, category, description, image }) => {
           <img 
             src={image} 
             alt={title} 
-            className="w-full h-full object-cover grayscale-[0.2]"
+            className="w-full h-full object-cover grayscale-[0.2] object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#050505]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-[#050505]" />
         </motion.div>
 
         <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-16 lg:p-24">
@@ -65,7 +72,7 @@ const ServiceDetailTemplate = ({ title, category, description, image }) => {
               <span className="text-orange-500 font-mono text-[10px] md:text-sm tracking-[0.4em] md:tracking-[0.6em] mb-2 md:mb-4 block uppercase">
                 {category}
               </span>
-              <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[10rem] font-serif italic tracking-tighter leading-[0.9] mb-6">
+              <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[9.5rem] font-serif italic tracking-tighter leading-[0.9] mb-6">
                 {title}
               </h1>
             </motion.div>
@@ -100,7 +107,7 @@ const ServiceDetailTemplate = ({ title, category, description, image }) => {
                   <div className="text-orange-500"><Clock size={20} /></div>
                   <h4 className="text-[11px] uppercase tracking-widest font-bold text-white">Quick Updates</h4>
                   <p className="text-white/40 text-sm leading-relaxed">
-                    Get your best shots back quickly so you can share your birthday highlights with friends and family on social media.
+                    Get your best shots back quickly so you can share your birthday highlights with friends and family.
                   </p>
                 </div>
             </div>
@@ -136,17 +143,21 @@ const ServiceDetailTemplate = ({ title, category, description, image }) => {
         </div>
       </motion.section>
 
-      {/* GALLERY GRID */}
+      {/* GALLERY GRID - Constrained Image Sizes */}
       <section className="py-16 md:py-24 px-4 md:px-12">
-          <div className="flex flex-col md:block md:columns-2 lg:columns-3 gap-6 space-y-6">
-            <motion.img 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              src={image} 
-              className="w-full rounded-sm grayscale hover:grayscale-0 transition-all duration-700" 
-              alt="Birthday highlight" 
-            />
+              transition={{ duration: 0.7 }}
+            >
+              <img 
+                src={image} 
+                className="w-full rounded-sm grayscale hover:grayscale-0 transition-all duration-700 object-cover max-h-[500px]" 
+                alt="Birthday highlight" 
+              />
+            </motion.div>
             
             <div className="aspect-square md:aspect-[3/4] bg-white/[0.02] border border-white/5 flex flex-col items-center justify-center p-8 md:p-12 text-center space-y-6">
                 <Sparkles className="text-orange-500/40" size={30} />
@@ -154,14 +165,18 @@ const ServiceDetailTemplate = ({ title, category, description, image }) => {
                 <div className="w-10 h-px bg-orange-500/50" />
             </div>
 
-            <motion.img 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              src="https://disneystories.lk/wp-content/uploads/2023/04/146.jpg" 
-              className="w-full rounded-sm brightness-75 hover:brightness-100 transition-all duration-700" 
-              alt="Party vibe" 
-            />
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
+              <img 
+                src="https://disneystories.lk/wp-content/uploads/2023/04/146.jpg" 
+                className="w-full rounded-sm brightness-75 hover:brightness-100 transition-all duration-700 object-cover max-h-[600px]" 
+                alt="Party vibe" 
+              />
+            </motion.div>
           </div>
       </section>
     </div>

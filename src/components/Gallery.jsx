@@ -31,11 +31,11 @@ import a5_4 from "../gallery/album-5/4.jpg";
 import a5_5 from "../gallery/album-5/5.jpg";
 
 const ALBUMS = [
-  { id: "01", title: "අපි අපිම 2025", year: "2025", images: [a1_1, a1_2, a1_3, a1_4, a1_5], fbLink: "#" },
-  { id: "02", title: "EVERGREEN 2025", year: "2025", images: [a3_1, a3_2, a3_3, a3_4, a3_5, a3_6], fbLink: "#" },
-  { id: "03", title: "වෙස්සන්ධාන 2026", year: "2026", images: [a2_1, a2_2, a2_3, a2_4, a2_5], fbLink: "#" },
-  { id: "04", title: "Wedding PreShoot 2025", year: "2025", images: [a4_1, a4_2, a4_3, a4_4, a4_5], fbLink: "#" },
-  { id: "05", title: "මන්දෝදරි 2025", year: "2025", images: [a5_1, a5_2, a5_3, a5_4, a5_5], fbLink: "#" }
+  { id: "01", title: "අපි අපිම 2025", year: "2025", images: [a1_1, a1_2, a1_3, a1_4, a1_5], fbLink: "https://www.facebook.com/share/p/18DiqmTmWQ/" },
+  { id: "02", title: "EVERGREEN 2025", year: "2025", images: [a3_1, a3_2, a3_3, a3_4, a3_5, a3_6], fbLink: "https://www.facebook.com/share/p/17fEcQayyS/" },
+  { id: "03", title: "වෙස්සන්ධාන 2026", year: "2026", images: [a2_1, a2_2, a2_3, a2_4, a2_5], fbLink: "https://www.facebook.com/share/p/16otBYfGVV/" },
+  { id: "04", title: "Wedding PreShoot 2025", year: "2025", images: [a4_1, a4_2, a4_3, a4_4, a4_5], fbLink: "https://www.facebook.com/share/p/1AHN3i9SWB/" },
+  { id: "05", title: "මන්දෝදරි 2025", year: "2025", images: [a5_1, a5_2, a5_3, a5_4, a5_5], fbLink: "https://www.facebook.com/share/p/1CFbs2BqX3/" }
 ];
 
 const sliderVariants = {

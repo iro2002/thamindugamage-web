@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Camera, Image as ImageIcon, Send, Heart, Sparkles, MapPin } from "lucide-react";
+import { Camera, Image as ImageIcon, Send, Heart, Sparkles, MapPin, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const ServiceDetailTemplate = ({ title, category, description, image, id }) => {
@@ -33,16 +33,16 @@ const ServiceDetailTemplate = ({ title, category, description, image, id }) => {
       
       {/* NAVIGATION BACK BUTTON */}
       <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 1 }}
         className="fixed top-8 left-6 md:left-12 z-50"
       >
-   
+      
       </motion.div>
 
-      {/* FULL SCREEN HERO */}
-      <section className="relative h-[85vh] md:h-screen w-full overflow-hidden">
+      {/* HERO SECTION - Optimized Height */}
+      <section className="relative h-[70vh] md:h-[80vh] w-full overflow-hidden">
         <motion.div 
           initial={{ scale: 1.1, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -52,9 +52,10 @@ const ServiceDetailTemplate = ({ title, category, description, image, id }) => {
           <img 
             src={image} 
             alt={title} 
-            className="w-full h-full object-cover grayscale-[0.2]"
+            className="w-full h-full object-cover grayscale-[0.2] object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-[#050505]" />
+          {/* Enhanced Gradient for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[#050505]" />
         </motion.div>
 
         <div className="relative z-10 h-full flex flex-col justify-end p-6 md:p-16 lg:p-24">
@@ -66,7 +67,7 @@ const ServiceDetailTemplate = ({ title, category, description, image, id }) => {
               <span className="text-orange-500 font-mono text-xs md:text-sm tracking-[0.6em] mb-4 block uppercase">
                 {category}
               </span>
-              <h1 className="text-7xl md:text-8xl lg:text-[11rem] font-serif italic tracking-tighter leading-none mb-8">
+              <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-serif italic tracking-tighter leading-none mb-8">
                 {title}
               </h1>
             </motion.div>
@@ -108,7 +109,7 @@ const ServiceDetailTemplate = ({ title, category, description, image, id }) => {
             variants={fadeInUp}
             className="lg:col-span-5"
           >
-            <div className="bg-white/[0.03] p-10 border border-white/10 rounded-sm backdrop-blur-3xl sticky top-24">
+            <div className="bg-white/[0.03] p-10 border border-white/10 rounded-sm backdrop-blur-3xl lg:sticky lg:top-32">
               <h3 className="text-xl font-serif italic mb-8">What to Expect</h3>
               <ul className="space-y-6 mb-10">
                 <li className="flex justify-between items-center text-[11px] uppercase tracking-widest border-b border-white/5 pb-4">
@@ -136,12 +137,17 @@ const ServiceDetailTemplate = ({ title, category, description, image, id }) => {
       {/* CREATIVE MASONRY GRID */}
       <section className="py-24 px-4 md:px-12">
           <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-            <motion.img 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-              src={image} className="w-full rounded-sm grayscale hover:grayscale-0 transition-all duration-1000 cursor-pointer" alt="Wedding Moment" 
-            />
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <img 
+                src={image} 
+                className="w-full rounded-sm grayscale hover:grayscale-0 transition-all duration-1000 cursor-pointer object-cover max-h-[600px]" 
+                alt="Wedding Moment" 
+              />
+            </motion.div>
             
             <div className="aspect-[3/4] bg-orange-500/5 border border-orange-500/10 flex flex-col items-center justify-center p-12 text-center space-y-6">
                 <Heart className="text-orange-500/40" size={32} />
@@ -149,23 +155,24 @@ const ServiceDetailTemplate = ({ title, category, description, image, id }) => {
                 <div className="w-12 h-px bg-orange-500/50" />
             </div>
 
-            <motion.img 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              src="https://www.wedding-spot.com/blog/sites/wsblog/files/styles/webp_desktop/public/images/migrated/273-Bride%2Band%2Bgroom%2Bclose%2Bup%2Bsaying%2Btheir%2Bvows%2Bduring%2Bwedding%2Bceremony.jpg.webp?itok=fecBNiSf" 
-              className="w-full rounded-sm brightness-75 hover:brightness-100 transition-all duration-1000 cursor-pointer" alt="Wedding Vibe" 
-            />
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <img 
+                src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2069" 
+                className="w-full rounded-sm brightness-75 hover:brightness-100 transition-all duration-1000 cursor-pointer object-cover max-h-[600px]" 
+                alt="Wedding Vibe" 
+              />
+            </motion.div>
           </div>
       </section>
     </div>
   );
 };
 
-const ArrowLeft = ({ size }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-);
-
+// Main Export Component
 export default function Wedding() {
   return (
     <ServiceDetailTemplate 
