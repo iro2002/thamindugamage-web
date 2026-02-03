@@ -1,91 +1,55 @@
 import React from "react";
-import { Instagram, Mail, MapPin, ArrowUpRight } from "lucide-react";
 import { HashLink } from "react-router-hash-link";
 
 const Footer = () => {
   return (
-    <footer className="relative bg-[#050505] text-white pt-32 pb-10 overflow-hidden">
-      {/* Background Accent - Large "TG" watermark */}
-      <div className="absolute -bottom-20 -right-20 pointer-events-none select-none">
-        <h2 className="text-[25rem] font-serif italic text-white/[0.02] leading-none">
+    <footer className="relative bg-[#050505] text-white py-12 overflow-hidden border-t border-white/5">
+      {/* Subtle Background Accent */}
+      <div className="absolute -bottom-10 -right-10 pointer-events-none select-none">
+        <h2 className="text-[15rem] font-serif italic text-white/[0.01] leading-none">
           TG
         </h2>
       </div>
 
-      <div className="relative z-10 max-w-screen-2xl mx-auto px-6 md:px-12">
-        
-
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-16 border-t border-white/5 pt-16">
+      <div className="relative z-10 max-w-screen-2xl mx-auto px-8 lg:px-20">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           
-          {/* Brand & Mission */}
-          <div className="md:col-span-5">
-            <h3 className="text-xl font-serif tracking-widest uppercase mb-8">
-              Thamindu <span className="text-orange-500">Gamage</span>
+          {/* Logo/Name Area */}
+          <div className="flex flex-col items-center md:items-start">
+            <h3 className="text-xs font-serif tracking-[0.5em] uppercase mb-2">
+              Thamindu <span className="text-orange-500/80">Gamage</span>
             </h3>
-            <p className="text-sm text-white/50 leading-relaxed max-w-xs font-light tracking-wide">
-              Documenting life's most profound moments through a cinematic lens. 
-              Based in Sri Lanka, operating across borders to tell your unique story.
+            <p className="text-[8px] uppercase tracking-[0.3em] text-white/20">
+              © {new Date().getFullYear()} — Cinematic Excellence
             </p>
           </div>
 
-          {/* Quick Links */}
-          <div className="md:col-span-3">
-            <p className="text-[10px] uppercase tracking-[0.4em] text-white/30 mb-8">Discovery</p>
-            <ul className="space-y-4">
-              {["Portfolio", "The Artist", "Services", "Reviews", "Gallery"].map((item) => (
-                <li key={item}>
-                  <HashLink
-                    smooth
-                    to={`/#${item.toLowerCase().replace(" ", "")}`}
-                    className="text-[11px] uppercase tracking-[0.2em] text-white/60 hover:text-orange-500 transition-colors"
-                  >
-                    {item}
-                  </HashLink>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Minimal Navigation */}
+          <nav className="flex gap-8">
+            {["Services", "Gallery", "Contact"].map((item) => (
+              <HashLink
+                key={item}
+                smooth
+                to={`/#${item.toLowerCase()}`}
+                className="text-[9px] uppercase tracking-[0.4em] text-white/40 hover:text-orange-500 transition-colors"
+              >
+                {item}
+              </HashLink>
+            ))}
+          </nav>
 
-          {/* Contact Details */}
-          <div className="md:col-span-4">
-            <p className="text-[10px] uppercase tracking-[0.4em] text-white/30 mb-8">Connect</p>
-            <div className="space-y-6">
-              <a href="mailto:hello@tgamage.com" className="block group">
-                <span className="text-[10px] text-white/30 block mb-1">Email</span>
-                <span className="text-sm tracking-widest group-hover:text-orange-500 transition-colors">hello@tgamage.com</span>
-              </a>
-              <a href="https://instagram.com" className="block group">
-                <span className="text-[10px] text-white/30 block mb-1">Social</span>
-                <span className="text-sm tracking-widest group-hover:text-orange-500 transition-colors">@thamindugamage</span>
-              </a>
-              <div className="block">
-                <span className="text-[10px] text-white/30 block mb-1">Studio</span>
-                <span className="text-sm tracking-widest">Colombo, Sri Lanka</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Legal & Tech */}
-        <div className="mt-32 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-          <p className="text-[9px] uppercase tracking-[0.4em] text-white/20">
-            © {new Date().getFullYear()} TG Photography — All Rights Reserved
-          </p>
-          
-          <div className="flex gap-12">
-            <button 
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              className="text-[9px] uppercase tracking-[0.4em] text-white/40 hover:text-white transition-colors"
-            >
-              Back to top ↑
-            </button>
-          </div>
+          {/* Functional Link */}
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="group flex items-center gap-2 text-[9px] uppercase tracking-[0.4em] text-white/20 hover:text-white transition-all"
+          >
+            Top <span className="text-orange-500 transition-transform group-hover:-translate-y-1">↑</span>
+          </button>
         </div>
       </div>
 
       {/* Grainy Texture */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.03] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      <div className="pointer-events-none absolute inset-0 opacity-[0.02] mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
     </footer>
   );
 };
