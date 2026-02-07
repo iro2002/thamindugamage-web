@@ -40,13 +40,7 @@ export default function BabyShoot() {
         transition={{ delay: 0.5 }}
         className="fixed top-6 left-6 md:top-8 md:left-12 z-50"
       >
-        <button 
-          onClick={() => navigate(-1)}
-          className="group flex items-center gap-3 text-[10px] tracking-[0.3em] uppercase font-bold bg-black/40 backdrop-blur-md border border-white/10 p-4 rounded-full hover:bg-orange-500 transition-all duration-500"
-        >
-          <ArrowLeft size={16} />
-          <span className="hidden md:block">Back</span>
-        </button>
+      
       </motion.div>
 
       {/* HERO SECTION - Reduced Height (75vh mobile / 85vh desktop) */}

@@ -89,7 +89,7 @@ const Contact = () => {
                     <MapPin size={18} strokeWidth={1.5} />
                   </div>
                   <span className="text-xs tracking-[0.2em] uppercase font-medium leading-relaxed pt-3">
-                    Udamththala, <br /> Tissamaharama, Sri Lanka
+                    Colombo <br />Sri Lanka
                   </span>
                 </div>
               </div>

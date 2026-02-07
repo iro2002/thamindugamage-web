@@ -138,9 +138,7 @@ const Hero = () => {
           </span>
         </div>
         <div className="h-20 w-[1px] bg-white/10" />
-        <p className="text-[8px] [writing-mode:vertical-lr] uppercase tracking-[0.5em] font-medium">
-          Scroll to discover
-        </p>
+    
       </div>
 
       {/* Grain Texture */}

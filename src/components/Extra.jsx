@@ -98,7 +98,7 @@ const FinalGallery = () => {
                   <h3 className="text-[10px] tracking-[0.4em] font-bold text-white/40 group-hover:text-white transition-colors">
                     {item.title}
                   </h3>
-                  <span className="text-[8px] font-mono text-white/10 italic">#{String(item.id).padStart(2, '0')}</span>
+
                 </div>
                 <div className="h-[1px] w-0 group-hover:w-full bg-orange-500/50 transition-all duration-700" />
               </div>

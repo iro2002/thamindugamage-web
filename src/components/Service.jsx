@@ -8,16 +8,17 @@ import engagementImg from "../gallery/service/engagement.jpg";
 import preshootImg from "../gallery/service/preshoot.jpeg";
 import graduationImg from "../gallery/service/graduation.jpg";
 import babyImg from "../gallery/service/baby.jpg";
-import birthdayImg from "../gallery/service/birthday.jpg";
+import birthdayImg from "../gallery/service/birthday.png";
 
 // 2. DATA ARRAY (Fixed: Now defined correctly)
 const services = [
-  { id: "01", title: "WEDDINGS", img: weddingImg, desc: "Capturing your timeless love stories." },
-  { id: "02", title: "ENGAGEMENT", img: engagementImg, desc: "The beginning of forever." },
-  { id: "03", title: "PRE SHOOT", img: preshootImg, desc: "Creative pre-wedding sessions." },
-  { id: "04", title: "GRADUATION", img: graduationImg, desc: "Celebrating your academic milestones." },
-  { id: "05", title: "BABY SHOOT", img: babyImg, desc: "Little moments, big memories." },
-  { id: "06", title: "BD SHOOT", img: birthdayImg, desc: "Fun-filled birthday celebrations." }
+
+  { id: "01", title: "ENGAGEMENT", img: engagementImg, desc: "The beginning of forever." },
+  { id: "02", title: "PRE SHOOT", img: preshootImg, desc: "Creative pre-wedding sessions." },
+  { id: "03", title: "GRADUATION", img: graduationImg, desc: "Celebrating your academic milestones." },
+  { id: "04", title: "BABY SHOOT", img: babyImg, desc: "Little moments, big memories." },
+  { id: "05", title: "BD SHOOT", img: birthdayImg, desc: "Fun-filled birthday celebrations." },
+  { id: "06", title: "WEDDINGS", img: weddingImg, desc: "Capturing your timeless love stories." }
 ];
 
 const Service = () => {
